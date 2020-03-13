@@ -113,10 +113,12 @@ class FileUtil {
 
         /**   filter so anything with "password" or "secret" is skipped */
         private fun isSecret(key: String): Boolean {
+            val lowerCaseKey = key.toLowerCase()
             return when {
-                key.toLowerCase().contains("access") && key.toLowerCase().contains("key") -> true
-                key.toLowerCase().contains("secret") -> true
-                key.toLowerCase().contains("password") -> true
+                lowerCaseKey.contains("access") && lowerCaseKey.contains("key") -> true
+                lowerCaseKey.contains("secret") -> true
+                lowerCaseKey.contains("password") -> true
+                lowerCaseKey.contains("headervalue") -> true
                 // todo add configurable extras, like "token" or "header"
                 else -> false
             }
