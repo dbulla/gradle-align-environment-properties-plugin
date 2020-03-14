@@ -4,10 +4,12 @@ buildscript{
 }
 
 plugins{
-    id("org.jetbrains.intellij") version "0.4.9"
-    kotlin("jvm") version "1.3.41"
-    id("se.patrikerdes.use-latest-versions") version "0.2.11"
-    id("com.github.ben-manes.versions") version "0.21.0"
+    id("org.jetbrains.intellij") version "0.4.16"
+    kotlin("jvm") version "1.3.70"
+    id("io.kotlintest") version "1.1.1"
+    
+    id("se.patrikerdes.use-latest-versions") version "0.2.13"
+    id("com.github.ben-manes.versions") version "0.28.0"
 }
 
 intellij{
@@ -24,9 +26,13 @@ repositories{
     mavenCentral()
 }
 
+tasks.withType<Test> {
+  useJUnitPlatform()
+}
+
 dependencies{
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70")
     implementation("org.apache.commons:commons-lang3:3.9")
-    testImplementation ("io.kotlintest:kotlintest-runner-junit5:3.2.1")
-    testImplementation ("io.mockk:mockk:1.9.1")
+    testImplementation ("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    testImplementation ("io.mockk:mockk:1.9.3")
 }
