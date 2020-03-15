@@ -1,15 +1,16 @@
 <idea-plugin>
-    <name>HOCON Converter</name>
-    <id>HOCON Converter</id>
-    <vendor email="dbullard@nurflugel.com" url="https://github.com/dbulla/hocon-converter-plugin">
-        Nurlfugel.com
+    <name>Align Environment Properties</name>
+    <id>Align Environment Properties</id>
+    <vendor email="dbullard@nurflugel.com" url="https://github.com/dbulla/align-environment-properties-plugin">
+        Nurflugel.com
     </vendor>
     <!--    <version>1.0</version>-->
     <depends>com.intellij.modules.lang</depends>
-    <change-notes>Release to fix major bug in consecutive maps not flushing the previous key path</change-notes>
+    <!--    <change-notes>Release to fix major bug in consecutive maps not flushing the previous key path</change-notes>-->
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectConfigurable displayName="HOCON Converter" instance="com.nurflugel.hocon.cofig.ui.ProjectSettingsPage"/>
+        <projectConfigurable displayName="Align Environment Properties"
+                             instance="com.nurflugel.gradle.environmentproperties.ui.ProjectSettingsPage"/>
     </extensions>
     <!--<helpset file="myhelp.jar" path="/Help.hs" />-->
 
@@ -19,11 +20,12 @@
     <actions>
         <group>
             <action id="properties.alignProperties"
-                    class="com.nurflugel.gradle.AlignPropertiesAction"
+                    class="com.nurflugel.gradle.environmentproperties.AlignPropertiesAction"
                     text="Align Properties Files"
-                    description="Align selectd properties files ">
+                    description="Align selected environment properties files ">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift a"/>
             </action>
+            <!--   todo move this action to the right-click context for selected files         -->
             <add-to-group group-id="EditMenu" anchor="last"/>
         </group>
     </actions>

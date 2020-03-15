@@ -1,7 +1,4 @@
-package com.nurflugel.hocon.cofig
-
-import com.intellij.ide.util.PropertiesComponent
-import com.intellij.openapi.project.Project
+package com.nurflugel.gradle.environmentproperties.config
 
 class ProjectSettings {
 
@@ -34,7 +31,7 @@ class ProjectSettings {
 
         private const val PREFIX = "Gradle_environment_properties_files_"
         private const val PLUGIN_ENABLED_IN_PROJECT = PREFIX + "EnabledInProject"
-//        const val FLATTEN_KEYS_ENABLED = PREFIX + "IS_FLATTEN_KEYS_Enabled"
+        const val EXTRA_SECRETS_LIST = PREFIX + "EXTRA_SECRETS_LIST"
 //        const val TOP_LEVEL_LISTS_AT_BOTTOM_ENABLED = PREFIX + "TOP_LEVEL_LISTS_AT_BOTTOM_Enabled"
     }
 }

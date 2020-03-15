@@ -1,8 +1,6 @@
-package com.nurflugel.hocon
+package com.nurflugel.gradle.environmentproperties
 
-import com.nurflugel.gradle.AlignPropertiesAction
-import com.nurflugel.hocon.RoundTripSpec.Companion.validateNewFile
-import io.kotlintest.shouldBe
+import com.nurflugel.gradle.environmentproperties.RoundTripSpec.Companion.validateNewFile
 import io.kotlintest.specs.StringSpec
 import java.io.File
 

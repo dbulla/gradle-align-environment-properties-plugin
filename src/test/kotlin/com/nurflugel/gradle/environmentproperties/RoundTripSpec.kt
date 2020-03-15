@@ -1,6 +1,5 @@
-package com.nurflugel.hocon
+package com.nurflugel.gradle.environmentproperties
 
-import com.nurflugel.gradle.AlignPropertiesAction
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import java.io.File
@@ -61,8 +60,16 @@ class RoundTripSpec : StringSpec(
             val newFile = File(parent, child)
 
             val lines = newFile.readLines()// ensure they're in the same order
-            val sortedExpected = expectedLines.sorted().map { adjustLineForConsistency(it) }
-            val sortedActual = lines.sorted().map { adjustLineForConsistency(it) }
+            val sortedExpected = expectedLines.sorted().map {
+                adjustLineForConsistency(
+                    it
+                )
+            }
+            val sortedActual = lines.sorted().map {
+                adjustLineForConsistency(
+                    it
+                )
+            }
 
             sortedActual shouldBe sortedExpected
             lines.size shouldBe expectedLines.size

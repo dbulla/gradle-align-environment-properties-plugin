@@ -1,10 +1,9 @@
-package com.nurflugel.hocon
+package com.nurflugel.gradle.environmentproperties
 
-//import com.nurflugel.hocon.PropertiesToConfSpec.Companion.convertToConf
 import com.jetbrains.rd.util.first
-import com.nurflugel.gradle.FileUtil.Companion.getCommonProperties
-import com.nurflugel.gradle.FileUtil.Companion.isKeyCommonAcrossAllEnvironments
-import com.nurflugel.gradle.FileUtil.Companion.isSecret
+import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.getCommonProperties
+import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.isKeyCommonAcrossAllEnvironments
+import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.isSecret
 import io.kotlintest.matchers.maps.shouldContainKey
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
