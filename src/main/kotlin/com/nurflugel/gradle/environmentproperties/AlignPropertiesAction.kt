@@ -69,7 +69,7 @@ class FileUtil {
             // Now, get all the properties that are common to all environments..
             val commonProperties = getCommonProperties(propsForEnvs)
 
-            // Make a collection to hold the new base properties files - just copy it 
+            // Make a collection to hold the new base properties files - just copy it
             //  anything already in application.properties stays there - any redundant stuff is removed later
             val newApplicationProperties = HashMap(baseProperties)
 
@@ -109,7 +109,7 @@ class FileUtil {
                 //  if the set is the same size as the list, then all values are different
                 if (keyValues.size == keyValues.toSet().size) {
                     val containsKey = applicationProperties.containsKey(key)
-                    applicationProperties.remove(key) //remove the redundant key 
+                    applicationProperties.remove(key) //remove the redundant key
                 }
             }
         }
@@ -255,7 +255,7 @@ class FileUtil {
                 .max() ?: 0
             val lines = propsForEnv.entries
                 .map { "${it.key}${StringUtils.leftPad(" ", maxLength - it.key.length + 1)} = ${it.value}" }
-                .sorted()
+                .sortedBy { it.toLowerCase() }
             return lines
         }
 
@@ -290,13 +290,13 @@ class FileUtil {
                 .filter { !it.startsWith("#") }
                 .filter { !it.startsWith("//") }
                 .map { it.split(Regex("="), 2) }
-                .map { it[0].trim() to it[1].trim() }
+                .map { it[0].trim() to (when {
+                    it.size>1 -> it[1]
+                    else -> ""// deal with keys that are missing values by using empty strings for the value
+                }).trim() }
                 .toList()
                 .toMap()
                 .toMutableMap()
         }
     }
 }
-
-
-
