@@ -26,7 +26,8 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift a"/>
             </action>
             <!--   todo move this action to the right-click context for selected files         -->
-            <add-to-group group-id="EditMenu" anchor="last"/>
+<!--            <add-to-group group-id="EditMenu" anchor="last"/>-->
+            <add-to-group group-id="FileMenu" anchor="last"/>
         </group>
     </actions>
     <description><![CDATA[
