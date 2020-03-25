@@ -32,55 +32,7 @@
     </actions>
     <description><![CDATA[
 
-This is a plugin for Intellij IDEA which converts HOCON back and forth between map-like and property-like formats.
-<p>
-This can be really useful when you need to change Spring property keys (which are resolved like <br>
-<pre>
-    "${aaa.bbb.ccc.ddd}"
-</pre>
-and your files are in .conf format, like<br>
-<pre>
-    aaa {
-      bbb {
-        ccc {
-          ddd = "some value"
-        }
-      }
-    }
-</pre>
-<p>
-    Simply convert the .conf-style file into property-style, then you can search/replace
-</p>
-<b>Features completed</b>
-<ul>
-    <li>read in basic properties-formatted file with simple key/value pairs</li>
-    <li>read in basic conf-formatted file with simple key/value pairs & maps</li>
-    <li>Keep "include" at top of file (in order)</li>
-    <li>Top-level lists, like this:</li>
-    <pre>
-cors = [
-  "xxxx",
-  "yyyy"
-]
-</pre>
-    <li>Option to "flatten" keys</li>
-    <li>Option to move top-level lists to the bottom </li>
-    <li>Single-line comments</li>
-</ul>
-<b>What's <em>NOT</em> working</b>
-<ul>
-    <li>Lists inside maps or other lists (only top-level lists are working currently)</li>
-</ul>
-
-
-<b>Planned features</b>
-<ul>
-    <li>Auto-detection of if the text is from a .yml file - if so, then it needs to be indented after the `app |-`
-        line
-    </li>
-  </ul>
-
-
+This is a plugin for Intellij IDEA which processes property files and
 
 
     ]]></description>
@@ -88,32 +40,8 @@ cors = [
 
     <change-notes><![CDATA[
 <ul>
-    <li><b>0.2.2 Feature</b> - optional flattened keys on map-style output.  Instead of this: <br>
-        <pre>
-aaa {
-  bbb {
-    ddd {
-      eee = 5
-    }
-  }
-  ccc = 4
-}</pre>
- you get this:<pre>
-aaa {
-  bbb.ddd.eee = 5
-  ccc = 4
-} </pre>
-This can be set in the Preferences panel (under the "Other Settings/HOCON Converter" menu)
-    </li>
-<li><b>0.2.1 Bug fix</b> - deal with parsing partially flattened keys, like
-        <pre>
-aaa.bbb {
-ddd.eee = 5
-}</pre>
-    </li>
-<li>0.1.0 Initial release</li>
+<li>0.1.0 Initial release    asdfasdfadfasdfasdfadsfasdfasdfasfasdf   </li>
 </ul>
-
    ]]></change-notes>
 
 </idea-plugin>

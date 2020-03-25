@@ -20,10 +20,10 @@ class AlignPropertiesAction : AnAction() {
         val dataContext = e.dataContext
         val data: Array<VirtualFile>? = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE_ARRAY)
         val inputFiles = data!!.asSequence()
-            .map { it.canonicalFile }
-            .map { it!!.path }
-            .map { File(it) }
-            .toList()
+                .map { it.canonicalFile }
+                .map { it!!.path }
+                .map { File(it) }
+                .toList()
 
         processPropertyFiles(inputFiles)
     }
@@ -58,7 +58,7 @@ class FileUtil {
          * @param propsForEnvs a map of properties maps, one for each environment plus the base
          */
         internal fun processProperties(
-            propsForEnvs: MutableMap<String, MutableMap<String, String>>
+                propsForEnvs: MutableMap<String, MutableMap<String, String>>
         ): MutableMap<String, MutableMap<String, String>> { // read in all properties files in src dir
 
             // first get the application.properties out of the map, then remove it from the map
@@ -76,16 +76,16 @@ class FileUtil {
             // now add any common properties we found in the other files
             newApplicationProperties.putAll(commonProperties)
 
-            val commonKeys = commonProperties.keys
-            val finalPropsForEnvs: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
+            val finalPropsForEnvs = filterEnvs(propsForEnvs, commonProperties.keys)
 
-            filterEnvs(propsForEnvs, commonKeys, finalPropsForEnvs)
 
             // remove redundant key/values in application.properties which are overridden in every environment,
             removeRedundantProperties(
-                newApplicationProperties,
-                finalPropsForEnvs
+                    newApplicationProperties,
+                    finalPropsForEnvs
             )
+
+            filterRedundantEnvProperties(finalPropsForEnvs, newApplicationProperties)
 
             // put the new application.properties back into the map
             finalPropsForEnvs[BASE_PROPERTIES_FILE_NAME] = newApplicationProperties
@@ -93,22 +93,35 @@ class FileUtil {
             return finalPropsForEnvs
         }
 
+        /** go though each env - if the value for a key is the same as in application.properties, then remove it from that env */
+        private fun filterRedundantEnvProperties(propsForEnvs: MutableMap<String, MutableMap<String, String>>, applicationProperties: java.util.HashMap<String, String>) {
+            applicationProperties.entries.forEach {
+                val key = it.key
+                val value = it.value
+                propsForEnvs.entries.forEach { envEntry ->
+                    val propsForEnv = envEntry.value
+                    if (propsForEnv.containsKey(key) && propsForEnv[key] == value) {
+                        propsForEnv.remove(key)// it's the same as the value in application.properties, so remove it
+                    }
+                }
+            }
+        }
+
         /**
          *  remove redundant key/values in application.properties which are overridden in every environment,
          */
         private fun removeRedundantProperties(
-            applicationProperties: MutableMap<String, String>,
-            propsForEnvs: MutableMap<String, MutableMap<String, String>>
+                applicationProperties: MutableMap<String, String>,
+                propsForEnvs: MutableMap<String, MutableMap<String, String>>
         ) {
             val commonKeys = getCommonKeys(propsForEnvs)
             // go through the common keys, see if the values differ for all envs. If so, remove from application.properties
             commonKeys.forEach { key ->
                 val keyValues = propsForEnvs.keys
-                    .map { propsForEnvs.getValue(it) }
-                    .map { it.getValue(key) }
+                        .map { propsForEnvs.getValue(it) }
+                        .map { it.getValue(key) }
                 //  if the set is the same size as the list, then all values are different
                 if (keyValues.size == keyValues.toSet().size) {
-                    val containsKey = applicationProperties.containsKey(key)
                     applicationProperties.remove(key) //remove the redundant key
                 }
             }
@@ -128,19 +141,18 @@ class FileUtil {
 
             possibleCommonKeys.forEach {
                 checkForCommonness(
-                    firstEnvMap,
-                    it,
-                    envs,
-                    propsForEnvs,
-                    commonProps
+                        firstEnvMap,
+                        it,
+                        envs,
+                        propsForEnvs,
+                        commonProps
                 )
             }
             return commonProps
         }
 
         // go through all of the properties files - if all of them have the same key, and make a list
-        fun getCommonKeys(propsForEnvs: Map<String, Map<String, String>>): Set<String> {
-            val commonProps: MutableMap<String, String> = mutableMapOf()
+        private fun getCommonKeys(propsForEnvs: Map<String, Map<String, String>>): Set<String> {
 
             // grab the keys of the first entry (could be any)
             val firstEnvMap: Map<String, String> = propsForEnvs.entries.first().value
@@ -158,18 +170,18 @@ class FileUtil {
         }
 
         private fun checkForCommonness(
-            firstEnvMap: Map<String, String>,
-            possibleCommonKey: String,
-            envs: Set<String>,
-            propsForEnvs: Map<String, Map<String, String>>,
-            commonProps: MutableMap<String, String>
+                firstEnvMap: Map<String, String>,
+                possibleCommonKey: String,
+                envs: Set<String>,
+                propsForEnvs: Map<String, Map<String, String>>,
+                commonProps: MutableMap<String, String>
         ) {
             val possibleCommonValue = firstEnvMap[possibleCommonKey]
             val isCommon = isKeyCommonAcrossAllEnvironments(
-                envs,
-                propsForEnvs,
-                possibleCommonKey,
-                possibleCommonValue
+                    envs,
+                    propsForEnvs,
+                    possibleCommonKey,
+                    possibleCommonValue
             )
 
             //go through each env and see if it contains it
@@ -183,10 +195,10 @@ class FileUtil {
         }
 
         fun isKeyCommonAcrossAllEnvironments(
-            envs: Set<String>,
-            propsForEnvs: Map<String, Map<String, String>>,
-            possibleCommonKey: String,
-            possibleCommonValue: String?
+                envs: Set<String>,
+                propsForEnvs: Map<String, Map<String, String>>,
+                possibleCommonKey: String,
+                possibleCommonValue: String?
         ): Boolean {
 
             for (env in envs) {
@@ -214,8 +226,8 @@ class FileUtil {
 
         /** Write the properties files */
         fun writePropertiesFiles(
-            propsForEnvs: Map<String, Map<String, String>>,
-            parentDir: File
+                propsForEnvs: Map<String, Map<String, String>>,
+                parentDir: File
         ) {
             propsForEnvs.forEach { (env: String, propsForEnv: Map<String, String>) ->
                 try {
@@ -238,44 +250,44 @@ class FileUtil {
         }
 
         fun removeOldFiles(
-            parentDir: File,
-            propsForEnvs: Map<String, Map<String, String>>
+                parentDir: File,
+                propsForEnvs: Map<String, Map<String, String>>
         ) {
             propsForEnvs
-                .map { it.key }
-                .map { createNewFileName(it) }
-                .map { File(parentDir, it) }
-                .forEach { it.delete() }
+                    .map { it.key }
+                    .map { createNewFileName(it) }
+                    .map { File(parentDir, it) }
+                    .forEach { it.delete() }
         }
 
         /** Line up the "=" and values so they're pretty */
         private fun alignPropertyColumns(propsForEnv: Map<String, String>): List<String> {
             val maxLength = propsForEnv.keys
-                .map { it.length }
-                .max() ?: 0
+                    .map { it.length }
+                    .max() ?: 0
             val lines = propsForEnv.entries
-                .map { "${it.key}${StringUtils.leftPad(" ", maxLength - it.key.length + 1)} = ${it.value}" }
-                .sortedBy { it.toLowerCase() }
+                    .map { "${it.key}${StringUtils.leftPad(" ", maxLength - it.key.length + 1)} = ${it.value}" }
+                    .sortedBy { it.toLowerCase() }
             return lines
         }
 
         /** Remove any common elements from the environment maps */
         private fun filterEnvs(
-            propsForEnvs: Map<String, Map<String, String>>,
-            commonKeys: Set<String>,
-            finalPropsForEnvs: MutableMap<String, MutableMap<String, String>>
-        ) {
-
+                propsForEnvs: Map<String, Map<String, String>>,
+                commonKeys: Set<String>
+        ): MutableMap<String, MutableMap<String, String>> {
+            val finalPropsForEnvs: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
             propsForEnvs.entries
-                .forEach { entry ->
-                    val env = entry.key
-                    val props = entry.value
-                    val filteredProps: MutableMap<String, String> = mutableMapOf()
-                    props.entries
-                        .filter { !commonKeys.contains(it.key) }
-                        .forEach { filteredProps[it.key] = it.value }
-                    finalPropsForEnvs[env] = filteredProps
-                }
+                    .forEach { entry ->
+                        val env = entry.key
+                        val props = entry.value
+                        val filteredProps: MutableMap<String, String> = mutableMapOf()
+                        props.entries
+                                .filter { !commonKeys.contains(it.key) }
+                                .forEach { filteredProps[it.key] = it.value }
+                        finalPropsForEnvs[env] = filteredProps
+                    }
+            return finalPropsForEnvs
         }
 
         /**
@@ -284,19 +296,21 @@ class FileUtil {
         private fun readPropsFromFile(propertyFile: File): MutableMap<String, String> {
 
             return FileUtils.readLines(propertyFile)
-                .asSequence()
-                .map { it.trim() }
-                .filter { it.isNotEmpty() }
-                .filter { !it.startsWith("#") }
-                .filter { !it.startsWith("//") }
-                .map { it.split(Regex("="), 2) }
-                .map { it[0].trim() to (when {
-                    it.size>1 -> it[1]
-                    else -> ""// deal with keys that are missing values by using empty strings for the value
-                }).trim() }
-                .toList()
-                .toMap()
-                .toMutableMap()
+                    .asSequence()
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .filter { !it.startsWith("#") }
+                    .filter { !it.startsWith("//") }
+                    .map { it.split(Regex("="), 2) }
+                    .map {
+                        it[0].trim() to (when {
+                            it.size > 1 -> it[1]
+                            else -> ""// deal with keys that are missing values by using empty strings for the value
+                        }).trim()
+                    }
+                    .toList()
+                    .toMap()
+                    .toMutableMap()
         }
     }
 }
