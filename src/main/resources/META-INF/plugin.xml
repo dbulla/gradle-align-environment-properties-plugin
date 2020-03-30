@@ -26,13 +26,19 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift a"/>
             </action>
             <!--   todo move this action to the right-click context for selected files         -->
-<!--            <add-to-group group-id="EditMenu" anchor="last"/>-->
             <add-to-group group-id="FileMenu" anchor="last"/>
         </group>
     </actions>
     <description><![CDATA[
 
-This is a plugin for Intellij IDEA which processes property files and
+This is a plugin for Intellij IDEA which takes a series of property files (one per environment, plus an optional existing `application.properties`), and
+puts all the common and non-secret stuff in `application.properties` (if that doesn't exist, it's created), and then only environment-specific stuff
+(dev is different from qa, for instance) and secret stuff (passwords, etc) are in the per-environment files.
+
+The idea behind this is to help unclutter property files, which are often edited by hand, with lots of duplication and opportunities to
+accidentally get one environment different from teh others when they're supposed to be the same.
+
+Full docs in the repo at https://github.com/dbulla/align-environment-properties-plugin
 
 
     ]]></description>
