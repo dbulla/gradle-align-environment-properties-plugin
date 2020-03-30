@@ -1,11 +1,11 @@
 buildscript {
     repositories { mavenCentral() }
-    dependencies { classpath(kotlin("gradle-plugin", version = "1.3.70")) }
+    dependencies { classpath(kotlin("gradle-plugin", version = "1.3.71")) }
 }
 
 plugins {
-    id("org.jetbrains.intellij") version "0.4.16"
-    kotlin("jvm") version "1.3.70"
+    id("org.jetbrains.intellij") version "0.4.17"
+    kotlin("jvm") version "1.3.71"
     id("io.kotlintest") version "1.1.1"
 
     id("se.patrikerdes.use-latest-versions") version "0.2.13"
@@ -31,8 +31,8 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70")
-    implementation("org.apache.commons:commons-lang3:3.9")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.71")
+    implementation("org.apache.commons:commons-lang3:3.10")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
     testImplementation("io.mockk:mockk:1.9.3")
 }
