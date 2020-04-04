@@ -12,7 +12,6 @@
         <projectConfigurable displayName="Align Environment Properties"
                              instance="com.nurflugel.gradle.environmentproperties.ui.ProjectSettingsPage"/>
     </extensions>
-    <!--<helpset file="myhelp.jar" path="/Help.hs" />-->
 
     <!--What's a valid value for this?-->
     <idea-version since-build="162"/>

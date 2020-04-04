@@ -25,7 +25,7 @@ class FileUtilSpec : StringSpec(
             "key 2 overridden base" to baseValue,
             differentValuesKey to baseValue,
             commonKey to commonValue
-        )
+                        )
         val qa = mapOf(
             "key 2 overridden base" to qaValue,
             commonKey to commonValue,
@@ -44,13 +44,15 @@ class FileUtilSpec : StringSpec(
             "qa.properties" to qa
         )
 
+        val keywords = listOf("secret", "password", "access && key", "headerValue")
+
         "test getCommonProperties".config(enabled = ALL_TESTS_ENABLED) {
 
             printEnvProps("Application", base)
             printEnvProps("dev", dev)
             printEnvProps("qa", qa)
 
-            val commonProperties: Map<String, String> = getCommonProperties(propsForEnvs)
+            val commonProperties: Map<String, String> = getCommonProperties(propsForEnvs, keywords)
 
             printEnvProps("Common", commonProperties)
 
@@ -62,7 +64,7 @@ class FileUtilSpec : StringSpec(
         }
 
         "test filterEnvs".config(enabled = ALL_TESTS_ENABLED) {
-            val commonProperties: Map<String, String> = getCommonProperties(propsForEnvs)
+            val commonProperties: Map<String, String> = getCommonProperties(propsForEnvs, keywords)
 
             printEnvProps("Application", base)
             printEnvProps("dev", dev)
@@ -70,9 +72,9 @@ class FileUtilSpec : StringSpec(
 
             printEnvProps("Common", commonProperties)
             commonProperties.size shouldBe 1
-            
-//            commonProperties.containsKey(key1) shouldBe true
-//            commonProperties[key1] shouldBe baseValue
+
+            //            commonProperties.containsKey(key1) shouldBe true
+            //            commonProperties[key1] shouldBe baseValue
 
 
             commonProperties.containsKey(commonKey) shouldBe true
@@ -81,11 +83,13 @@ class FileUtilSpec : StringSpec(
 
 
         "test isSecret".config(enabled = ALL_TESTS_ENABLED) {
-            isSecret("dibble") shouldBe false
-            isSecret("password") shouldBe true
-            isSecret("access") shouldBe false
-            isSecret("accesskey") shouldBe true
-            isSecret("headervalue") shouldBe true
+
+
+            isSecret("dibble", keywords) shouldBe false
+            isSecret("password", keywords) shouldBe true
+            isSecret("access", keywords) shouldBe false
+            isSecret("accesskey", keywords) shouldBe true
+            isSecret("headervalue", keywords) shouldBe true
         }
 
 
@@ -106,7 +110,7 @@ class FileUtilSpec : StringSpec(
         // setting this to false lets you test a single method if you then set it's enabled flag to true.
         // Irritating that the framework does not value from dev"ns't do this better...
 
-        // const val ALL_TESTS_ENABLED = false
+        //         const val ALL_TESTS_ENABLED = false
         const val ALL_TESTS_ENABLED = true
     }
 }
