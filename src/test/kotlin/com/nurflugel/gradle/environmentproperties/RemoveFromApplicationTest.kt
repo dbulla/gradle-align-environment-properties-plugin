@@ -1,5 +1,6 @@
 package com.nurflugel.gradle.environmentproperties
 
+import com.intellij.ide.util.AppPropertiesComponentImpl
 import com.nurflugel.gradle.environmentproperties.RoundTripSpec.Companion.validateNewFile
 import io.kotlintest.specs.StringSpec
 import java.io.File
@@ -11,7 +12,7 @@ class RemoveFromApplicationTest : StringSpec(
         val action = AlignPropertiesAction()
         val parent = File("src/test/resources/examples/sample3")
         val files = listOf(File(parent, "application.properties"), File(parent, "dev.properties"), File(parent, "qa.properties"))
-        action.processPropertyFiles(files)
+        action.processPropertyFiles(files, AppPropertiesComponentImpl())
 
         "test base".config(enabled = ALL_TESTS_ENABLED) {
             validateNewFile(

@@ -51,7 +51,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="secret&#10;password&#10;access &amp;&amp; key                &#10;headervalue" noi18n="true"/>
+              <text value="" noi18n="true"/>
             </properties>
           </component>
         </children>

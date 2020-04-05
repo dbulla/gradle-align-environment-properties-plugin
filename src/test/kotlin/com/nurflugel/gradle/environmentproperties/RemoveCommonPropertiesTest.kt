@@ -1,7 +1,10 @@
 package com.nurflugel.gradle.environmentproperties
 
+import com.intellij.ide.util.AppPropertiesComponentImpl
 import com.nurflugel.gradle.environmentproperties.RoundTripSpec.Companion.validateNewFile
 import io.kotlintest.specs.StringSpec
+import io.mockk.every
+import io.mockk.mockk
 import java.io.File
 
 /** Test that all common properties (the same for every environment) are moved into application.properties and no longer exist in the env properties */
@@ -10,8 +13,19 @@ class RemoveCommonPropertiesTest : StringSpec(
 
         val action = AlignPropertiesAction()
         val parent = File("src/test/resources/examples/sample2")
-        val files = listOf(File(parent, "application.properties"), File(parent, "dev.properties"), File(parent, "qa.properties"))
-        action.processPropertyFiles(files)
+        val files = listOf(
+            File(parent, "application.properties"),
+            File(parent, "dev.properties"),
+            File(parent, "qa.properties")
+        )
+
+        val propertiesComponent = mockk<AppPropertiesComponentImpl>()
+//        every { propertiesComponent.getValue("Gradle_environment_properties_files_EXTRA_SECRETS_LIST","")} returns ""
+        every { propertiesComponent.getValue(any(), "") } returns ""
+//        every { propertiesComponent.setValue("Gradle_environment_properties_files_EXTRA_SECRETS_LIST", "secret\n" +
+        every { propertiesComponent.setValue(any(), any(), "") }
+//        action.processPropertyFiles(files, propertiesComponent)
+        action.processPropertyFiles(files, AppPropertiesComponentImpl())
 
         "test base".config(enabled = ALL_TESTS_ENABLED) {
             validateNewFile(

@@ -1,5 +1,6 @@
 package com.nurflugel.gradle.environmentproperties
 
+import com.intellij.ide.util.AppPropertiesComponentImpl
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import java.io.File
@@ -15,7 +16,7 @@ class RoundTripSpec : StringSpec(
             File(parent, "dev.properties"),
             File(parent, "qa.properties")
         )
-        action.processPropertyFiles(files)
+        action.processPropertyFiles(files, AppPropertiesComponentImpl())
 
         "test base".config(enabled = ALL_TESTS_ENABLED) {
             validateNewFile(
