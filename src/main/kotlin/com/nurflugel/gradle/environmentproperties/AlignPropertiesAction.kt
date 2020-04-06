@@ -4,7 +4,7 @@ import com.intellij.ide.util.AppPropertiesComponentImpl
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.PlatformDataKeys
+import com.intellij.openapi.actionSystem.PlatformDataKeys.VIRTUAL_FILE_ARRAY
 import com.intellij.openapi.vfs.VirtualFile
 import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.processProperties
 import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.readPropertyFiles
@@ -12,7 +12,6 @@ import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.removeOldFi
 import com.nurflugel.gradle.environmentproperties.FileUtil.Companion.writePropertiesFiles
 import com.nurflugel.gradle.environmentproperties.config.ProjectSettings.Companion.getSecretsKeyWords
 import org.apache.commons.io.FileUtils
-import org.apache.commons.lang3.StringUtils
 import java.io.File
 import java.io.IOException
 
@@ -21,7 +20,7 @@ class AlignPropertiesAction : AnAction() {
     @Suppress("MissingRecentApi")
     override fun actionPerformed(e: AnActionEvent) {
         val dataContext = e.dataContext
-        val data: Array<VirtualFile>? = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE_ARRAY)
+        val data: Array<VirtualFile>? = dataContext.getData(VIRTUAL_FILE_ARRAY)
         val inputFiles = data!!.asSequence()
             .map { it.canonicalFile }
             .map { it!!.path }
@@ -86,7 +85,6 @@ class FileUtil {
             val secretsKeyWords = getSecretsKeyWords(propertiesComponent)
             val keyWords = secretsKeyWords
                 .split("\n")
-            keyWords.forEach { println("keyword is  = ${it}") }
 
             // Now, get all the properties that are common to all environments..
 
@@ -303,7 +301,10 @@ class FileUtil {
                 .map { it.length }
                 .max() ?: 0
             val lines = propsForEnv.entries
-                .map { "${it.key}${StringUtils.leftPad(" ", maxLength - it.key.length + 1)} = ${it.value}" }
+                .map {
+                    val leftPaddedEquals: String = " = ".padStart(maxLength - it.key.length + 3)
+                    "${it.key}$leftPaddedEquals${it.value}"
+                }
                 .sortedBy { it.toLowerCase() }
             return lines
         }

@@ -18,14 +18,17 @@
 
     <actions>
         <group>
+
+
             <action id="properties.alignProperties"
                     class="com.nurflugel.gradle.environmentproperties.AlignPropertiesAction"
                     text="Align Properties Files"
                     description="Align selected environment properties files ">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift a"/>
             </action>
-            <!--   todo move this action to the right-click context for selected files         -->
             <add-to-group group-id="FileMenu" anchor="last"/>
+            <!--   todo move this action to the right-click context for selected files         -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </group>
     </actions>
     <description><![CDATA[

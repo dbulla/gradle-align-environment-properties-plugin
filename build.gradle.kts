@@ -19,7 +19,7 @@ intellij {
 }
 
 group = "com.nurflugel"
-version = "0.1.0"
+version = "1.0.0"
 
 repositories {
     jcenter()
@@ -32,7 +32,6 @@ tasks.withType<Test> {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.71")
-    implementation("org.apache.commons:commons-lang3:3.10")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
     testImplementation("io.mockk:mockk:1.9.3")
 }

@@ -11,7 +11,6 @@ So, anything that's common across all environments goes into `application.proper
 In the plugin settings, you can add to the list of keywords that mark keys as secret.  The obvious ones are stuff like "password", "secret", etc. 
 You may have terms like "accesstoken", or prefer usernames also be considered secret.  If so, add them to this list.
 
-
 What does this look like in practice?  Imagine you've got an app which has a database, and some AWS stuff.  Each environment has its own property file
 (at work, we put ours into AWS Secrets Manager).
 
@@ -134,10 +133,16 @@ see each file as a counterpart with a "_new" in the name (rather than overwrite 
 
 Now, if you need a new environment (say, UAT), you just need to create a file with 5 props instead of 20.  Simple, easy, and clear.
 
-## What's a Secret?
-Any key with the word "secret" or "password" should be considered a secret.  But what about keys which have  "access" and "key" together (as AWS keys are)?
+## How to run it
+Select the property files you want to play with - then either
+- Right click and select the `Align Property Files` action
+- Or, Select `Align Propety Files` from the `File` menu
+- Or, press `ctrl alt shift a` (or `cmd alt shift a` on a Mac)
 
-In the settings page for the plugin, you can add extra key words, one per line.  Adding `&&` will mark secret only those keys which have both tokens in it.  For example, if we
+## What's a Secret?
+Any key with the word "secret" or "password" should be considered a secret.  But, what about keys which have  "access" and "key" together (as AWS keys are)?
+
+In the settings page for the plugin, you can add extra keywords, one per line.  Adding `&&` will mark secret only those keys which have both tokens in it.  For example, if we
 have a property file which contains the secret:
 ```
 aws.access.key = XLKDJLSKDJLSKJS
