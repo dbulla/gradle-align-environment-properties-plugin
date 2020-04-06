@@ -1,7 +1,7 @@
 <idea-plugin>
     <name>Align Environment Properties</name>
     <id>Align Environment Properties</id>
-    <vendor email="dbullard@nurflugel.com" url="https://github.com/dbulla/align-environment-properties-plugin">
+    <vendor email="dbullard@nurflugel.com" url="https://github.com/dbulla/gradle-align-environment-properties-plugin">
         Nurflugel.com
     </vendor>
     <!--    <version>1.0</version>-->
@@ -15,7 +15,7 @@
 
     <!--What's a valid value for this?-->
     <idea-version since-build="162"/>
-
+ 
     <actions>
         <group>
             <action id="properties.alignProperties"
