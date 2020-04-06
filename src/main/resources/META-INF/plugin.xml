@@ -27,7 +27,7 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift a"/>
             </action>
             <add-to-group group-id="FileMenu" anchor="last"/>
-            <!--   todo move this action to the right-click context for selected files         -->
+            <!--   this action shows in the right-click context for selected files         -->
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </group>
     </actions>
@@ -48,7 +48,7 @@ Full docs in the repo at https://github.com/dbulla/align-environment-properties-
 
     <change-notes><![CDATA[
 <ul>
-<li>0.1.0 Initial release    asdfasdfadfasdfasdfadsfasdfasdfasfasdf   </li>
+<li>1.0.0 Initial release see todos in the Github repo for details   </li>
 </ul>
    ]]></change-notes>
 
