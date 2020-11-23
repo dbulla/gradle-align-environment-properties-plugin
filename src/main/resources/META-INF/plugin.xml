@@ -1,6 +1,6 @@
 <idea-plugin>
-    <name>Align Environment Properties</name>
-    <id>Align Environment Properties</id>
+    <name>Align Environment Property Files</name>
+    <id>Align Environment Property Files</id>
     <vendor email="dbullard@nurflugel.com" url="https://github.com/dbulla/gradle-align-environment-properties-plugin">
         Nurflugel.com
     </vendor>
@@ -20,7 +20,7 @@
         <group>
             <action id="properties.alignProperties"
                     class="com.nurflugel.gradle.environmentproperties.AlignPropertiesAction"
-                    text="Align Properties Files"
+                    text="Align Property Files"
                     description="Align selected environment properties files ">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift a"/>
             </action>
