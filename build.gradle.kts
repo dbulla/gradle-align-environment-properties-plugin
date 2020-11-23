@@ -15,7 +15,7 @@ plugins {
 intellij {
     updateSinceUntilBuild = false
     instrumentCode = true
-    version = "2019.3"
+    version = "2020.2"
 }
 
 group = "com.nurflugel"
